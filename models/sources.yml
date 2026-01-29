@@ -1,0 +1,79 @@
+version: 2
+
+sources:
+  - name: pipedrive
+    database: postgres
+    schema: public
+    description: "Pipedrive CRM source data"
+    tables:
+      - name: deal_changes
+        description: "Historical changes to deals including stage transitions, owner changes, and lost reasons"
+        columns:
+          - name: deal_id
+            description: "Unique identifier for the deal"
+          - name: change_time
+            description: "Timestamp when the change occurred"
+          - name: changed_field_key
+            description: "The field that was changed (add_time, user_id, stage_id, lost_reason)"
+          - name: new_value
+            description: "The new value after the change"
+      
+      - name: stages
+        description: "Sales funnel stage definitions"
+        columns:
+          - name: stage_id
+            description: "Unique identifier for the stage"
+          - name: stage_name
+            description: "Name of the sales funnel stage"
+      
+      - name: activity
+        description: "Sales activities linked to deals"
+        columns:
+          - name: activity_id
+            description: "Unique identifier for the activity"
+          - name: type
+            description: "Activity type code (meeting, sc_2, follow_up, after_close_call)"
+          - name: assigned_to_user
+            description: "User ID of the assigned sales rep"
+          - name: deal_id
+            description: "Associated deal ID"
+          - name: done
+            description: "Whether the activity has been completed"
+          - name: due_to
+            description: "Due date/time for the activity"
+      
+      - name: activity_types
+        description: "Activity type definitions"
+        columns:
+          - name: id
+            description: "Unique identifier for the activity type"
+          - name: name
+            description: "Display name of the activity type"
+          - name: active
+            description: "Whether the activity type is currently active"
+          - name: type
+            description: "Activity type code"
+      
+      - name: users
+        description: "Sales team users"
+        columns:
+          - name: id
+            description: "Unique identifier for the user"
+          - name: name
+            description: "User's full name"
+          - name: email
+            description: "User's email address"
+          - name: modified
+            description: "Last modified timestamp"
+      
+      - name: fields
+        description: "Field definitions and value options for Pipedrive fields"
+        columns:
+          - name: ID
+            description: "Unique identifier for the field"
+          - name: FIELD_KEY
+            description: "Field key used in deal_changes"
+          - name: NAME
+            description: "Display name of the field"
+          - name: FIELD_VALUE_OPTIONS
+            description: "JSON array of possible values for dropdown fields"

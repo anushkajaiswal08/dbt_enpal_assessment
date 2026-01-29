@@ -1,0 +1,16 @@
+
+
+with source as (
+    select * from "postgres"."public"."users"
+),
+
+renamed as (
+    select
+        id as user_id,
+        name as user_name,
+        email,
+        modified as modified_at
+    from source
+)
+
+select * from renamed

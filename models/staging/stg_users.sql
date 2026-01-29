@@ -1,0 +1,21 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
+
+with source as (
+    select * from {{ source('pipedrive', 'users') }}
+),
+
+renamed as (
+    select
+        id as user_id,
+        name as user_name,
+        email,
+        modified as modified_at
+    from source
+)
+
+select * from renamed
+
